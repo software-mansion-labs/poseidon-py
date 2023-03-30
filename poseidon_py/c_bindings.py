@@ -5,11 +5,11 @@ import struct
 from typing import List, Optional
 
 LIB_NAME = "lib_pos.so"
+UINT256_MAX = 2**256 - 1
 
 
 def hades_permutation(values: List[int]) -> List[int]:
-    if len(values) != 3:
-        raise ValueError(f"expected 3 values, got {len(values)} values")
+    _validate_values(values)
 
     LOADER.load_c_lib()
 
@@ -19,6 +19,19 @@ def hades_permutation(values: List[int]) -> List[int]:
     LOADER.c_lib.permutation_3(c_values)
 
     return Converter.make_py_values(c_values)
+
+
+def _validate_values(values: List[int]) -> None:
+    if len(values) != 3:
+        raise ValueError(f"expected 3 values, got {len(values)} values")
+
+    for val in values:
+        _assert_u_int256_t(val)
+
+
+def _assert_u_int256_t(value: int) -> None:
+    if not 0 <= value <= UINT256_MAX:
+        raise ValueError(f"{value} out of u_int256_t range")
 
 
 @dataclasses.dataclass

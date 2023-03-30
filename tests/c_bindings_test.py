@@ -1,6 +1,6 @@
 import pytest
 
-from poseidon_py.c_bindings import hades_permutation
+from poseidon_py.c_bindings import hades_permutation, UINT256_MAX
 
 
 @pytest.mark.parametrize(
@@ -76,3 +76,22 @@ def test_hades_permutation(values, expected_result):
     result = hades_permutation(values=values)
 
     assert result == expected_result
+
+
+@pytest.mark.parametrize("values", [[], [1], [1, 2], [1, 2, 3, 4]])
+def test_invalid_values_length(values):
+    with pytest.raises(ValueError):
+        _ = hades_permutation(values=values)
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        [1, 2, -3],
+        [0, -1, 0],
+        [UINT256_MAX + 1, UINT256_MAX, UINT256_MAX],
+    ],
+)
+def test_invalid_value(values):
+    with pytest.raises(ValueError):
+        _ = hades_permutation(values=values)
