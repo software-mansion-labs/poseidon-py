@@ -1,0 +1,63 @@
+name: compile_and_test
+
+on:
+  push:
+    branches: [ main ]
+
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build_and_test:
+    name: Build & test on ${{ matrix.os }}.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: [ "3.9, 3.10" ]
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            target: Linux
+
+          - os: macos-latest
+            target: Macos
+
+          - os: windows-latest
+            target: Windows
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Builds the project.
+        run: ./build.sh --within-ci true
+
+      - name: Add msbuild to PATH
+        if: ${{ matrix.os == 'windows-latest' }}
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Run tests.
+        run: |
+          poetry run pytest tests/c_bindings_test.py
