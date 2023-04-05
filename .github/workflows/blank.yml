@@ -38,7 +38,9 @@ jobs:
       - name: Build the project
         run: |
           ls -l
+          ls -l poseidon
           pwd
+          tree -d .
           ./build.sh
       - name: Run tests
         run: |
