@@ -37,10 +37,11 @@ jobs:
         run: poetry install
       - name: Build the project
         run: |
+          source $VENV
           ls -l
-          ls -l poseidon
           pwd
-          tree -d .
+          ls -l poseidon
+          tree .
           ./build.sh
       - name: Run tests
         run: |
