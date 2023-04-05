@@ -1,4 +1,4 @@
-name: run_tests
+name: CI
 
 on:
   push:
@@ -9,55 +9,37 @@ on:
 
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: bash
-
 jobs:
-  build_and_test:
-    name: Build & test on ${{ matrix.os }}.
-    runs-on: ${{ matrix.os }}
+  build-and-test:
+    name: Build & test - ${{ matrix.os }} - ${{ matrix.python-version }}
     strategy:
       matrix:
-        python-version: [ "3.9, 3.10" ]
-        os: [ubuntu-latest, macos-latest]
-        include:
-          - os: ubuntu-latest
-            target: Linux
-
-          - os: macos-latest
-            target: Macos
-
-          - os: windows-latest
-            target: Windows
-
+        os: [ "ubuntu-latest", "macos-latest", "windows-latest" ]
+        python-version: [ "3.9", "3.10" ]
+    defaults:
+      run:
+        shell: bash
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v3
         with:
           submodules: recursive
-
-      - name: Install poetry
-        run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up python
+        id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
       - name: Install dependencies
+        run: poetry install
+      - name: Build the project
         run: |
-          poetry install
-
-      - name: Builds the project.
-        run: ./build.sh --within-ci true
-
-      - name: Add msbuild to PATH
-        if: ${{ matrix.os == 'windows-latest' }}
-        uses: microsoft/setup-msbuild@v1.0.2
-
-      - name: Run tests.
+          ./build.sh
+      - name: Run tests
         run: |
           poetry run pytest tests/c_bindings_test.py
