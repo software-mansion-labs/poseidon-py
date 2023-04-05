@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         python-version: [ "3.9, 3.10" ]
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
         include:
           - os: ubuntu-latest
             target: Linux
