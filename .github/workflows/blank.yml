@@ -36,7 +36,10 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Build the project
-        run: ./build.sh
+        run: |
+          ls -l
+          pwd
+          ./build.sh
       - name: Run tests
         run: |
           poetry run pytest tests/c_bindings_test.py
