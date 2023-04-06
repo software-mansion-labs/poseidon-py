@@ -37,7 +37,7 @@ if __name__ == "__main__":
         author="drknzz",
         author_email="kamil.jankowski.x@gmail.com",
         url="https://github.com/drknzz/poseidon-py.git",
-        extras_require={"build": ["make>=3.81"]},
+        extras_require={"build": ["make"]},
         ext_modules=[PoseidonExtension()],
         cmdclass={
             "build_py": BuildPy,
