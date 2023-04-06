@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-latest" ]
+        os: [ "windows-2019" ]
         python-version: [ "3.9" ]
     runs-on: ${{ matrix.os }}
     steps:
@@ -41,12 +41,18 @@ jobs:
         if: matrix.os == 'macos-12'
         run: echo "MACOSX_DEPLOYMENT_TARGET=12.0" >> $GITHUB_ENV
 
+      - name: Set up MinGW
+        if: runner.os == 'Windows'
+        uses: egor-tensin/setup-mingw@84c781b557efd538dec66bde06988d81cd3138cf
+        with:
+          platform: x64
+
       - name: Build wheels
         run: python -X utf8 -m cibuildwheel --output-dir wheelhouse
         env:
           CIBW_ARCHS: all
           CIBW_BUILD_FRONTEND: "build"
-          CIBW_BUILD: cp39-musllinux_x86_64
+          CIBW_BUILD: cp39-* cp310-*
           CIBW_SKIP: '*i686 cp39-win_arm64'
           CIBW_ARCHS_MACOS: "universal2"
           CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
