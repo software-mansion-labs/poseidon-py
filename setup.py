@@ -1,7 +1,7 @@
 import subprocess
 import setuptools
-from setuptools.command import build_py
-from setuptools.command import build_ext
+from setuptools.command.build_py import build_py
+from setuptools.command.build_ext import build_ext
 
 class PoseidonExtension(setuptools.Extension):
     def __init__(self):
