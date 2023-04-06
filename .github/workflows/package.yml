@@ -1,0 +1,87 @@
+name: Package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_wheels:
+    name: Build wheel on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ "ubuntu-latest", "macos-11", "macos-12" ]
+        python-version: [ "3.9" ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Set up python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: all
+
+      - name: Install cibuildwheel
+        run: python -X utf8 -m pip install cibuildwheel==2.12.0
+
+      - name: Set macos-11 deployment target
+        if: matrix.os == 'macos-11'
+        run: echo "MACOSX_DEPLOYMENT_TARGET=11.0" >> $GITHUB_ENV
+
+      - name: Set macos-12 deployment target
+        if: matrix.os == 'macos-12'
+        run: echo "MACOSX_DEPLOYMENT_TARGET=12.0" >> $GITHUB_ENV
+
+      - name: Build wheels
+        run: python -X utf8 -m cibuildwheel --output-dir wheelhouse
+        env:
+          CIBW_ARCHS: all
+          CIBW_BUILD_FRONTEND: "build"
+          CIBW_BUILD: cp39-* cp310-*
+          CIBW_SKIP: '*i686 cp39-win_arm64'
+          CIBW_ARCHS_MACOS: "universal2"
+          CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
+
+      - name: Upload built wheels
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build SDist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build SDist
+        run: python setup.py sdist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*.tar.gz
+
+  upload_pypi:
+    name: Upload package to TestPyPI
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
+
+      - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          password: ${{ secrets.PYPI_TOKEN }}
