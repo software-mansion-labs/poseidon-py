@@ -1,6 +1,7 @@
 import subprocess
 import setuptools
-
+from setuptools.command import build_py
+from setuptools.command import build_ext
 
 class PoseidonExtension(setuptools.Extension):
     def __init__(self):
@@ -8,13 +9,13 @@ class PoseidonExtension(setuptools.Extension):
         setuptools.Extension.__init__(self, self.name, sources=[])
 
 
-class BuildPy(setuptools.command.build_py):
+class BuildPy(build_py):
     def run(self):
         self.run_command("build_ext")
         return super().run()
 
 
-class BuildPoseidon(setuptools.command.build_ext):
+class BuildPoseidon(build_ext):
     already_built = False
 
     def build_extension(self, ext):
