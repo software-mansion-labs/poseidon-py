@@ -2,9 +2,10 @@ import ctypes
 import dataclasses
 import pathlib
 import struct
+import os
 from typing import List, Optional
 
-LIB_NAME = "lib_pos.so"
+LIB_NAME = "lib_pos"
 UINT256_MAX = 2**256 - 1
 
 
@@ -49,7 +50,9 @@ class Loader:
         self._set_types()
 
     def _get_lib_path(self) -> pathlib.Path:
-        return pathlib.Path(__file__).parents[1] / self.lib_name
+        dir_ = pathlib.Path(__file__).parents[1]
+        file_ = next(file for file in os.listdir(dir_) if file.startswith(LIB_NAME))
+        return dir_ / file_
 
     def _set_types(self) -> None:
         assert self.c_lib is not None
