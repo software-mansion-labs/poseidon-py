@@ -19,3 +19,6 @@ pyright = "^1.1.301"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.build]
+generate-setup-file = true
