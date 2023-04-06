@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ "macos-11", "macos-12" ]
+        os: [ "ubuntu-latest" ]
         python-version: [ "3.9" ]
     runs-on: ${{ matrix.os }}
     steps:
@@ -46,7 +46,7 @@ jobs:
         env:
           CIBW_ARCHS: all
           CIBW_BUILD_FRONTEND: "build"
-          CIBW_BUILD: cp39-* cp310-*
+          CIBW_BUILD: cp39-musllinux_x86_64
           CIBW_SKIP: '*i686 cp39-win_arm64'
           CIBW_ARCHS_MACOS: "universal2"
           CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
