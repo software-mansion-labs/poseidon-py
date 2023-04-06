@@ -24,7 +24,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
     find . -type f -not -name lib_pos.dylib -name '*.dylib' -delete
 else
-    echo "OS not supported at the moment"
+    echo "$OSTYPE is not supported at the moment"
     exit 1;
 fi
 
