@@ -14,7 +14,7 @@ build_for_mac_target () {
 
 echo "Building poseidon..."
 
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+if [[ "$OSTYPE" == *"linux"* ]]; then
     make -C poseidon/sources only_c
     mv poseidon/sources/lib_pos.so lib_pos.so
 elif [[ "$OSTYPE" == "darwin"* ]]; then
