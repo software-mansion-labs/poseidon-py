@@ -53,7 +53,8 @@ def poseidon_hash_many(array: List[int]) -> int:
     for block in blockify(data=values, chunk_size=r):
         state = list(
             hades_permutation(
-                [state_val + block_val for state_val, block_val in zip(state, block)] + state[-1:]
+                [state_val + block_val for state_val, block_val in zip(state, block)]
+                + state[-1:]
             )
         )
 
