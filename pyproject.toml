@@ -3,7 +3,7 @@ name = "poseidon-py"
 version = "0.1.1"
 description = "Python implementation of Poseidon hash"
 authors = ["drknzz <kamil.jankowski.x@gmail.com>"]
-readme = "README.md"
+readme = "README.rst"
 packages = [{include = "poseidon_py"}]
 
 [tool.poetry.dependencies]
