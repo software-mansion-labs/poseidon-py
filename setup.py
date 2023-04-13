@@ -32,13 +32,12 @@ if __name__ == "__main__":
 
     setuptools.setup(
         name="poseidon_py",
-        version="0.1.1",
+        version="0.1.2",
         description="Python implementation of Poseidon hash",
         long_description=long_description,
         author="drknzz",
         author_email="kamil.jankowski.x@gmail.com",
         url="https://github.com/drknzz/poseidon-py.git",
-        extras_require={"build": ["make"]},
         ext_modules=[PoseidonExtension()],
         cmdclass={
             "build_py": BuildPy,
