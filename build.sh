@@ -14,6 +14,12 @@ build_for_mac_target () {
 
 echo "Building poseidon..."
 
+command -v make >/dev/null 2>&1
+if [ $? -eq 1 ]; then
+    echo >&2 "Error: make not found. Make sure it is installed."
+    exit 1
+fi
+
 if [[ "$OSTYPE" == *"linux"* ]]; then
     make -C poseidon/sources only_c
     mv poseidon/sources/lib_pos.so lib_pos.so
