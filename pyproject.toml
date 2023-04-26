@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "poseidon-py"
-version = "0.1.3"
+version = "0.1.4"
 description = "Python implementation of Poseidon hash"
 authors = ["drknzz <kamil.jankowski.x@gmail.com>"]
 readme = "README.rst"
