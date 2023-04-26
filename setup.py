@@ -57,7 +57,7 @@ if __name__ == "__main__":
             "build_py": BuildPy,
             "build_ext": BuildPoseidon,
         },
-        python_requires=">=3.9",
+        python_requires=">=3.7",
         packages=["poseidon_py"],
         package_data={"poseidon_py": ["../lib_pos.*"]},
     )
