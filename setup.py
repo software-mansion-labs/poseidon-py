@@ -31,7 +31,7 @@ class BuildPoseidon(build_ext):
         self.already_built = True
     
     def _build_extension_windows(self):
-        with subprocess.Popen(["powershell.exe", ".\\build.sh"]) as process:
+        with subprocess.Popen(["powershell.exe", ".\\build.ps1"]) as process:
             process.wait()
             if process.returncode != 0:
                 raise Exception("Build returned a non-zero code")
