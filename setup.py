@@ -36,7 +36,7 @@ class BuildPoseidon(build_ext):
             if process.returncode != 0:
                 raise Exception("Build returned a non-zero code")
             
-    def _build_extension_mac_linux():
+    def _build_extension_mac_linux(self):
         subprocess.run("chmod a+x ./build.sh && ./build.sh", shell=True, check=True)
 
 
