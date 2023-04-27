@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     setuptools.setup(
         name="poseidon_py",
-        version="0.1.5",
+        version="0.1.3",
         description="Python implementation of Poseidon hash",
         long_description=long_description,
         author="drknzz",
@@ -57,7 +57,7 @@ if __name__ == "__main__":
             "build_py": BuildPy,
             "build_ext": BuildPoseidon,
         },
-        python_requires=">=3.7",
+        python_requires=">=3.8",
         packages=["poseidon_py"],
         package_data={"poseidon_py": ["../lib_pos.*"]},
     )
