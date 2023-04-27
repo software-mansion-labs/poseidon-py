@@ -47,7 +47,7 @@ jobs:
           CIBW_ARCHS: all
           CIBW_BUILD_FRONTEND: "build"
           CIBW_BUILD: cp38-* cp39-* cp310-* cp311-*
-          CIBW_SKIP: '*i686 cp39-win_arm64'
+          CIBW_SKIP: '*i686 cp39-win_arm64 cp310-win_arm64 cp311-win_arm64'
           CIBW_ARCHS_MACOS: "universal2"
           CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
 
@@ -84,6 +84,5 @@ jobs:
 
       - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
         with:
-          repository_url: https://test.pypi.org/legacy/
           user: __token__
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          password: ${{ secrets.PYPI_TOKEN }}
