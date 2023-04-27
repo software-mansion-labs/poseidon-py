@@ -16,7 +16,7 @@ Version 0.1.3 (2023-04-27)
 --------------------------
 
 * Add support for Windows
-* Add support for Python >=3.8, <3.12
+* Add support for Python >=3.8
 
 Version 0.1.2 (2023-04-13)
 --------------------------
