@@ -1,2 +1,3 @@
 recursive-include ./poseidon *
-pyproject.toml
+include build.sh
+include pyproject.toml

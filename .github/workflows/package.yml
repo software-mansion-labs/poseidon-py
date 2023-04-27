@@ -9,8 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-latest", "macos-11", "macos-12" ]
-        python-version: [ "3.9" ]
+        os: [ "ubuntu-latest", "macos-11", "macos-12", "windows-latest" ]
+        python-version: [ "3.11" ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Check out repository
@@ -46,8 +46,8 @@ jobs:
         env:
           CIBW_ARCHS: all
           CIBW_BUILD_FRONTEND: "build"
-          CIBW_BUILD: cp39-* cp310-*
-          CIBW_SKIP: '*i686 cp39-win_arm64'
+          CIBW_BUILD: cp38-* cp39-* cp310-* cp311-*
+          CIBW_SKIP: '*i686 cp39-win_arm64 cp310-win_arm64 cp311-win_arm64'
           CIBW_ARCHS_MACOS: "universal2"
           CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
 

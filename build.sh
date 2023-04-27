@@ -20,18 +20,15 @@ if [ $? -eq 1 ]; then
     exit 1
 fi
 
-if [[ "$OSTYPE" == *"linux"* ]]; then
-    make -C poseidon/sources only_c
-    mv poseidon/sources/lib_pos.so lib_pos.so
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     build_for_mac_target "x86_64-apple-macos11"
     build_for_mac_target "arm64-apple-macos11"
     lipo -create -output lib_pos.dylib x86_64_lib_pos.dylib arm64_lib_pos.dylib
 
     find . -type f -not -name lib_pos.dylib -name '*.dylib' -delete
 else
-    echo "$OSTYPE is not supported at the moment"
-    exit 1;
+    make -C poseidon/sources only_c
+    mv poseidon/sources/lib_pos.so lib_pos.so
 fi
 
 make -C poseidon/sources clean

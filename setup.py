@@ -1,3 +1,4 @@
+import platform
 import subprocess
 import setuptools
 from setuptools.command.build_py import build_py
@@ -22,8 +23,21 @@ class BuildPoseidon(build_ext):
         if self.already_built:
             return
 
-        subprocess.run("chmod a+x ./build.sh && ./build.sh", shell=True, check=True)
+        if platform.system() == "Windows":
+            self._build_extension_windows()
+        else:
+            self._build_extension_mac_linux()
+
         self.already_built = True
+    
+    def _build_extension_windows(self):
+        with subprocess.Popen(["powershell.exe", ".\\build.ps1"]) as process:
+            process.wait()
+            if process.returncode != 0:
+                raise Exception("Build returned a non-zero code")
+            
+    def _build_extension_mac_linux(self):
+        subprocess.run("chmod a+x ./build.sh && ./build.sh", shell=True, check=True)
 
 
 if __name__ == "__main__":
@@ -32,7 +46,7 @@ if __name__ == "__main__":
 
     setuptools.setup(
         name="poseidon_py",
-        version="0.1.2",
+        version="0.1.3",
         description="Python implementation of Poseidon hash",
         long_description=long_description,
         author="drknzz",
@@ -43,7 +57,7 @@ if __name__ == "__main__":
             "build_py": BuildPy,
             "build_ext": BuildPoseidon,
         },
-        python_requires=">=3.9",
+        python_requires=">=3.8",
         packages=["poseidon_py"],
         package_data={"poseidon_py": ["../lib_pos.*"]},
     )

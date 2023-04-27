@@ -67,7 +67,7 @@ class Converter:
     felt_t = ctypes.c_uint64 * 4
 
     @staticmethod
-    def make_c_values(values: List[int]) -> ctypes.Array[felt_t]:
+    def make_c_values(values: List[int]) -> ctypes.Array:
         felts = [Converter.int_to_felt_t(val) for val in values]
         return (Converter.felt_t * 3)(*felts)
 
@@ -78,7 +78,7 @@ class Converter:
         return Converter.felt_t(*felt_)
 
     @staticmethod
-    def make_py_values(c_values: ctypes.Array[felt_t]) -> List[int]:
+    def make_py_values(c_values: ctypes.Array) -> List[int]:
         return [
             int.from_bytes(val, byteorder="little", signed=False) for val in c_values
         ]
