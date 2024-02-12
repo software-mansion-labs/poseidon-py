@@ -30,8 +30,11 @@ jobs:
         with:
           platforms: all
 
-      - name: Install cibuildwheel
+      - name: Install setuptool
         run: python -X utf8 -m pip install cibuildwheel==2.12.0
+
+      - name: Install cibuildwheel
+        run: python -X utf8 -m pip install setuptools==69.0.3
 
       - name: Set macos-12 deployment target
         if: matrix.os == 'macos-12'

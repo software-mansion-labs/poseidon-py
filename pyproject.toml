@@ -8,7 +8,6 @@ packages = [{include = "poseidon_py"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-setuptools = "^69.0.3"
 
 
 [tool.poetry.group.dev.dependencies]
