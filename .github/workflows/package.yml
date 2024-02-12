@@ -76,7 +76,7 @@ jobs:
           path: dist/*.tar.gz
 
   upload_pypi:
-    name: Upload package to TestPyPI
+    name: Upload package to PyPI
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
 
@@ -88,6 +88,5 @@ jobs:
 
       - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
         with:
-          repository_url: https://test.pypi.org/legacy/
           user: __token__
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          password: ${{ secrets.PYPI_TOKEN }}
