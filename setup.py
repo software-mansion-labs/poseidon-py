@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     setuptools.setup(
         name="poseidon_py",
-        version="0.1.4",
+        version="0.1.6",
         description="Python implementation of Poseidon hash",
         long_description=long_description,
         author="drknzz",
