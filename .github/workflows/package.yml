@@ -89,4 +89,4 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
         with:
           user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
