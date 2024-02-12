@@ -12,6 +12,11 @@ They can be found in *poseidon_params.txt*.
 Changelog
 =========
 
+Version 0.1.4 (2023-04-27)
+--------------------------
+
+* Add support for Windows (Python 3.12)
+
 Version 0.1.3 (2023-04-27)
 --------------------------
 
