@@ -49,3 +49,6 @@ jobs:
       - name: Run tests
         run: |
           poetry run pytest tests/c_bindings_test.py
+      - name: Run tests
+        run: |
+          poetry run pytest tests/poseidon_hash_test.py
