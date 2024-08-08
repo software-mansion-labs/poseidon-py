@@ -12,6 +12,11 @@ They can be found in *poseidon_params.txt*.
 Changelog
 =========
 
+Version 0.1.5 (2024-08-08)
+--------------------------
+
+* Update dependencies
+
 Version 0.1.4 (2024-02-12)
 --------------------------
 
