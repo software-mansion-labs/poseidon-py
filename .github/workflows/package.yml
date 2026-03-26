@@ -30,6 +30,10 @@ jobs:
         with:
           platforms: all
 
+      - name: Set macOS deployment target
+        if: runner.os == 'macOS'
+        run: echo "MACOSX_DEPLOYMENT_TARGET=11.0" >> $GITHUB_ENV
+
       - name: Install cibuildwheel
         run: python -X utf8 -m pip install cibuildwheel==3.4.0
 
