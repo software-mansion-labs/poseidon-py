@@ -12,6 +12,13 @@ They can be found in *poseidon_params.txt*.
 Changelog
 =========
 
+Version 0.2.0 (2026-03-26)
+--------------------------
+
+* Add support for Python 3.13 and 3.14
+* Drop support for Python 3.8 and 3.9
+* Update dependencies
+
 Version 0.1.5 (2024-08-08)
 --------------------------
 
