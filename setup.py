@@ -40,10 +40,11 @@ class BuildPoseidon(build_ext):
         subprocess.run("chmod a+x ./build.sh && ./build.sh", shell=True, check=True)
 
 
-with open("README.rst", encoding="utf-8") as f:
-    long_description = f.read()
+if __name__ == "__main__":
+    with open("README.rst", encoding="utf-8") as f:
+        long_description = f.read()
 
-setuptools.setup(
+    setuptools.setup(
         name="poseidon_py",
         version="0.2.0",
         description="Python implementation of Poseidon hash",
@@ -59,4 +60,4 @@ setuptools.setup(
         python_requires=">=3.10",
         packages=["poseidon_py"],
         package_data={"poseidon_py": ["../lib_pos.*"]},
-)
+    )
