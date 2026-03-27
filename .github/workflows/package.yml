@@ -30,6 +30,10 @@ jobs:
         with:
           platforms: all
 
+      - name: Set macOS deployment target
+        if: runner.os == 'macOS'
+        run: echo "MACOSX_DEPLOYMENT_TARGET=11.0" >> $GITHUB_ENV
+
       - name: Install cibuildwheel
         run: python -X utf8 -m pip install cibuildwheel==3.4.0
 
@@ -46,6 +50,7 @@ jobs:
       - name: Upload built wheels
         uses: actions/upload-artifact@v7
         with:
+          name: wheels-${{ matrix.os }}
           path: ./wheelhouse/*.whl
 
   build_sdist:
@@ -61,6 +66,7 @@ jobs:
 
       - uses: actions/upload-artifact@v7
         with:
+          name: sdist
           path: dist/*.tar.gz
 
   upload_pypi:
@@ -71,10 +77,10 @@ jobs:
     steps:
       - uses: actions/download-artifact@v7
         with:
-          name: artifact
           path: dist
+          merge-multiple: true
 
-      - uses: pypa/gh-action-pypi-publish@c7f29f7adef1a245bd91520e94867e5c6eedddcc
+      - uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
